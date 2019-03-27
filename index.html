@@ -1,0 +1,157 @@
+<!DOCTYPE html5>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="./jquery.js" type="text/javascript"></script>
+		<script type="text/javascript">
+		var cookies;
+		var sendingData;
+		var method;
+		var url;
+		var dataType;
+		var contentType
+		var params;
+		function send(){
+			$.ajax({
+				type: method,
+				ContentType: contentType+" charset=UTF-8",
+				dataType:dataType,
+				data: params,
+				url: 'http://www.foo.com/bar.php',
+				complete: function(data) {
+					console.log('RESPONSE TEXT>>>>>>>>', data.responseText);
+				}
+			});
+		}
+		function clickReq(){
+			var data=$('.request_form').serializeArray();
+			console.log(data);
+			for(i in data){
+				switch(data[i]["name"]){
+					case "url":
+						url=data[i]["value"];
+						break;
+					case "type":
+						method=data[i]["value"];
+						break;
+					case "requestcontenttype":
+						dataType=data[i]["value"];
+						break;
+					case "responsecontenttype":
+						contentType=data[i]["value"];
+						break;
+					case "params":
+						params=data[i]["value"];
+						break;
+					case "cookies":
+						cookies=data[i]["value"];
+						break;
+				}
+			}
+			send();
+		}
+
+		</script>
+	</head>
+	<body>
+		<div class="request_mainblock">
+			<p class="request_description">request settings:</p>
+			<form class="request_form">
+				<p><input class="request_url" type="text" name="url" placeholder="adress (without any get params)"></p>
+
+				<br>
+				<p><span class="request_chooserequestmethodtext">Choose request method</span></p>
+				<p><input name="type" type="radio" value="GET"><span class="request_chooserequestmethodtext">GET</span></p>
+				<p><input name="type" type="radio" value="POST"><span class="request_chooserequestmethodtext">POST</span></p>
+				<p><input name="type" type="radio" value="PUT"><span class="request_chooserequestmethodtext">PUT</span></p>
+				<p><input name="type" type="radio" value="DELETE"><span class="request_chooserequestmethodtext">DELETE</span></p>
+
+				<br>
+				<p><span class="request_chooserequestmethodtext">Choose request content type</span></p>
+				<p><input name="requestcontenttype" type="radio" value="application/x-www-form-urlencoded"><span class="request_chooserequestmethodtext">application/x-www-form-urlencoded</span></p>
+				<p><input name="requestcontenttype" type="radio" value="multipart/form-data"><span class="request_chooserequestmethodtext">multipart/form-data</span></p>
+				<p><input name="requestcontenttype" type="radio" value="text/plain"><span class="request_chooserequestmethodtext">text/plain</span></p>
+
+				<br>
+				<p><span class="request_chooserequestmethodtext">Choose response content type</span></p>
+				<p><input name="responsecontenttype" type="radio" value="xml"><span class="request_chooserequestmethodtext">xml</span></p>
+				<p><input name="responsecontenttype" type="radio" dvalue="html"><span class="request_chooserequestmethodtext">html</span></p>
+				<p><input name="responsecontenttype" type="radio" value="script"><span class="request_chooserequestmethodtext">script</span></p>
+				<p><input name="responsecontenttype" type="radio" value="json"><span class="request_chooserequestmethodtext">json</span></p>
+				<p><input name="responsecontenttype" type="radio" value="jsonp"><span class="request_chooserequestmethodtext">jsonp</span></p>
+				<p><input name="responsecontenttype" type="radio" value="text"><span class="request_chooserequestmethodtext">text</span></p>
+
+				<br>
+				<textarea class="request_textareaparams" name="params" rows="10" placeholder="GET/POST/JSON"></textarea>
+				<textarea class="request_textareaparams" name="cookies" rows="10" placeholder="cookies exmpl:c=v;someveryimportantdata=12344321"></textarea>
+			</form>
+			<div class="request_button" onclick="clickReq()"><p>Send</p></div>
+		</div>
+		<div class="breaker"></div>
+		<div class="response mainblock">
+		</div>
+	</body>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.request_button{
+		margin-top: 10px;
+		border: 1px solid #000;
+		text-align: center;
+		font-size: 25px;
+		width:30%;
+		height: 36px;
+		cursor: pointer;
+		transition:0.6s;
+		height: auto;
+		padding: 0px 10px;
+	}
+	.request_button:hover{
+		width:35%;
+		font-size: 30px;
+	}
+	.request_button p{
+		position: relative;
+		margin: auto;
+	}
+	.breaker{
+		width: 100%;
+		border-bottom: 2px solid #000;
+		margin-bottom: 25px;
+		margin-top: 25px;
+
+	}
+	.request_description{
+		font-size: 30px;
+		margin-bottom: 15px;
+	}
+	body{
+		padding-left: 100px;
+		padding-right: 100px;
+		padding-top: 50px;
+		padding-bottom: 50px;
+	}
+	.request_mainblock{
+		width: 100%;
+		
+	}
+	.request_chooserequestmethodtext{
+		font-size: 25px;
+		margin-left: 10px;
+	}
+	.request_textareaparams{
+		word-wrap:break-word;
+		font-size: 23px;
+		width: 30%;
+		resize: none;
+	}
+	.request_url{
+		font-size: 23px;
+		width: 30%;
+		resize: none;
+	}
+
+	</style>
+</html>
